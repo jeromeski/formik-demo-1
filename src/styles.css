@@ -1,0 +1,31 @@
+.App {
+  font-family: sans-serif;
+
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 25%;
+  max-width: 35%;
+}
+
+label {
+  font-weight: bold;
+}
+
+form > * {
+  margin-bottom: 20px;
+}
+
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
