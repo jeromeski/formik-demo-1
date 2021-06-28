@@ -12,6 +12,7 @@ form {
 
 label {
   font-weight: bold;
+  font-size: .8rem;
 }
 
 form > * {
@@ -34,4 +35,13 @@ form > * {
 
 .mr-2 {
   margin-right: 5px;
+}
+
+.fa-check-circle {
+  color: green;
+}
+
+small {
+  color: grey;
+  font-weight: 400;
 }
