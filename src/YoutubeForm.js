@@ -3,12 +3,15 @@ import * as Yup from 'yup';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons'
+import TextError from './TextError';
 
 
 const initialValues = {
   name: "",
   email: "",
-  channel: ""
+  channel: "",
+  comments: "",
+  address: ""
 }
 
 const onSubmit = (values) => {
@@ -38,7 +41,7 @@ function YoutubeForm() {
             name="name" 
             id="name"
           />
-          <ErrorMessage name="name"/>
+          <ErrorMessage name="name" component={TextError}/>
         </div>
 
         <div className="form-control">
@@ -48,7 +51,9 @@ function YoutubeForm() {
             name="email" 
             id="email"
           />
-          <ErrorMessage name="email"/>
+          <ErrorMessage name="email">
+            {(errorMsg) => <div className="error">{errorMsg}</div> }
+          </ErrorMessage>
         </div>
 
         <div className="form-control">
@@ -65,10 +70,10 @@ function YoutubeForm() {
           <label htmlFor="comment">Comment:</label>
           <Field 
             as="textarea"
-            name="comment" 
-            id="comment"
+            name="comments" 
+            id="comments"
           />
-          <ErrorMessage name="comment"/>
+          <ErrorMessage name="comments"/>
         </div>
         <div className="form-control">
           <label htmlFor="address">Address:</label>
