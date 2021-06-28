@@ -24,7 +24,6 @@ const validationSchema = Yup.object({
 
 function YoutubeForm() {
 
-
   return (
     <Formik 
       initialValues={initialValues}
@@ -58,8 +57,31 @@ function YoutubeForm() {
             type="text" 
             name="channel" 
             id="channel"
+            placeholder="Youtube Channel"
           />
           <ErrorMessage name="channel"/>
+        </div>
+        <div className="form-control">
+          <label htmlFor="comment">Comment:</label>
+          <Field 
+            as="textarea"
+            name="comment" 
+            id="comment"
+          />
+          <ErrorMessage name="comment"/>
+        </div>
+        <div className="form-control">
+          <label htmlFor="address">Address:</label>
+          <Field name="address">
+            {(props) => {
+              const {field, form, meta} = props;
+              console.log(props)
+              return <div>
+                <input type='text' id="address" {...field}/>
+                {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+              </div>
+            }}
+          </Field>
         </div>
 
         <div>
