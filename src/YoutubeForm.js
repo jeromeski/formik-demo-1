@@ -11,7 +11,11 @@ const initialValues = {
   email: "",
   channel: "",
   comments: "",
-  address: ""
+  address: "",
+  social: {
+    facebook: "",
+    twitter: ""
+  }
 }
 
 const onSubmit = (values) => {
@@ -21,7 +25,13 @@ const onSubmit = (values) => {
 const validationSchema = Yup.object({
   name: Yup.string().required('Name is required!'),
   email: Yup.string().required('Email field is required!').matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, {message: 'Invalid email format!'}),
-  channel: Yup.string().required('Channel is required')
+  channel: Yup.string().required('Channel is required'),
+  comments: Yup.string().min(5).max(100),
+  address: Yup.string().required('Address is required!'),
+  social: Yup.object({
+    facebook: Yup.string().required(),
+    twitter: Yup.string().required()
+  })
 }) 
 
 
@@ -67,7 +77,7 @@ function YoutubeForm() {
           <ErrorMessage name="channel"/>
         </div>
         <div className="form-control">
-          <label htmlFor="comment">Comment:</label>
+          <label htmlFor="comment">Comments:</label>
           <Field 
             as="textarea"
             name="comments" 
@@ -87,6 +97,24 @@ function YoutubeForm() {
               </div>
             }}
           </Field>
+        </div>
+        <div className="form-control">
+          <label htmlFor="facebook">Facebook</label>
+          <Field 
+            type="text" 
+            id="facebook" 
+            name="social.facebook"
+          />
+          <ErrorMessage name="social.facebook" />
+        </div>
+        <div className="form-control">
+          <label htmlFor="twitter">Twitter</label>
+          <Field 
+            type="text" 
+            id="twitter" 
+            name="social.twitter"
+          />
+          <ErrorMessage name="social.twitter" />
         </div>
 
         <div>
