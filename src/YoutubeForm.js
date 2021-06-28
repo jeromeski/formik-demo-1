@@ -1,4 +1,4 @@
-import {Formik, Form, Field} from 'formik';
+import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -31,7 +31,7 @@ function YoutubeForm() {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      <Form>
+      {({errors, touched}) => (<Form>
         <div className="form-control">
           <label htmlFor="name">Name:</label>
           <Field 
@@ -39,7 +39,7 @@ function YoutubeForm() {
             name="name" 
             id="name"
           />
-          {formik.touched.name && formik.errors.name ? <div className="error">{formik.errors.name}</div>: null}
+          <ErrorMessage name="name"/>
         </div>
 
         <div className="form-control">
@@ -49,7 +49,7 @@ function YoutubeForm() {
             name="email" 
             id="email"
           />
-          {formik.touched.email && formik.errors.email ? <div className="error">{formik.errors.email}</div>: null}
+          <ErrorMessage name="email"/>
         </div>
 
         <div className="form-control">
@@ -59,17 +59,17 @@ function YoutubeForm() {
             name="channel" 
             id="channel"
           />
-          {formik.touched.channel && formik.errors.channel ? <div className="error">{formik.errors.channel}</div>: null}
+          <ErrorMessage name="channel"/>
         </div>
 
         <div>
-          {!formik.errors.name && formik.touched.name ? <div><FontAwesomeIcon icon={faCheckCircle} size="xs" className="mr-2" /><small>Name is validated</small></div> : null}
-          {!formik.errors.email && formik.touched.email ? <div><FontAwesomeIcon icon={faCheckCircle} size="xs" className="mr-2" /><small>Email is validated</small></div> : null}
-          {!formik.errors.channel && formik.touched.channel ? <div><FontAwesomeIcon icon={faCheckCircle} size="xs" className="mr-2" /><small>Channel is validated</small></div> : null}
+          {!errors.name && touched.name ? <div><FontAwesomeIcon icon={faCheckCircle} size="xs" className="mr-2" /><small>Name is validated</small></div> : null}
+          {!errors.email && touched.email ? <div><FontAwesomeIcon icon={faCheckCircle} size="xs" className="mr-2" /><small>Email is validated</small></div> : null}
+          {!errors.channel && touched.channel ? <div><FontAwesomeIcon icon={faCheckCircle} size="xs" className="mr-2" /><small>Channel is validated</small></div> : null}
         </div>
 
         <button type="submit">Submit</button>
-      </Form>
+      </Form>)}
     </Formik>
   )
 }
