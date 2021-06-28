@@ -28,14 +28,21 @@ const validationSchema = Yup.object({
   name: Yup.string().required('Name is required!'),
   email: Yup.string().required('Email field is required!').matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, {message: 'Invalid email format!'}),
   channel: Yup.string().required('Channel is required'),
-  comments: Yup.string().min(5).max(100),
   address: Yup.string().required('Address is required!'),
   social: Yup.object({
     facebook: Yup.string().required(),
     twitter: Yup.string().required()
   }),
   
-}) 
+})
+
+const validateComments = value  => {
+  let error;
+  if(!value) {
+    error = "Required"
+  }
+  return error;
+}
 
 
 function YoutubeForm() {
@@ -80,13 +87,14 @@ function YoutubeForm() {
           <ErrorMessage name="channel"/>
         </div>
         <div className="form-control">
-          <label htmlFor="comment">Comments:</label>
+          <label htmlFor="comments">Comments:</label>
           <Field 
             as="textarea"
             name="comments" 
             id="comments"
+            validate={validateComments}
           />
-          <ErrorMessage name="comments"/>
+          <ErrorMessage name="comments" component={TextError}/>
         </div>
         <div className="form-control">
           <label htmlFor="address">Address:</label>
