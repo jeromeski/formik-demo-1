@@ -1,4 +1,4 @@
-import {Formik, Form, Field, ErrorMessage, FieldArray} from 'formik';
+import {Formik, Form, Field, ErrorMessage, FieldArray, FastField} from 'formik';
 import * as Yup from 'yup';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -90,16 +90,16 @@ function YoutubeForm() {
         </div>
         <div className="form-control">
           <label htmlFor="address">Address:</label>
-          <Field name="address">
+          <FastField name="address">
             {(props) => {
               const {field, form, meta} = props;
-              console.log(props)
+              console.count('Rerender :')
               return <div>
                 <input type='text' id="address" {...field}/>
                 {meta.touched && meta.error ? <TextError>{meta.error}</TextError> : null}
               </div>
             }}
-          </Field>
+          </FastField>
         </div>
         <div className="form-control">
           <label htmlFor="facebook">Facebook</label>
@@ -145,7 +145,7 @@ function YoutubeForm() {
             name="phNumbers"
           >
             {(fieldArrayProps) => {
-              console.log('fieldArrayProps :', fieldArrayProps)
+              // console.log('fieldArrayProps :', fieldArrayProps)
               const {push, remove, form} = fieldArrayProps;
               const {values} = form;
               const {phNumbers} = values;
