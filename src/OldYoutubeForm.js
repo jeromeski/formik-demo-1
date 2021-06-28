@@ -21,12 +21,31 @@ const validationSchema = Yup.object({
   channel: Yup.string().required('Channel is required')
 }) 
 
+const validate = (values) => {
+  let errors = {};
 
-function YoutubeForm() {
+  if(!values.name) {
+    errors.name = 'Name is required'
+  }
+  if(!values.email) {
+    errors.email = 'Email is required'
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Invalid email address'; 
+  }
+
+  if(!values.channel) {
+    errors.channel = 'Channel is required'
+  }
+  return errors;
+}
+
+
+function OldYoutubeForm() {
 
   const formik = useFormik({
     initialValues,
     onSubmit ,
+    // validate,
     validationSchema
   })
 
@@ -40,7 +59,9 @@ function YoutubeForm() {
           type="text" 
           name="name" 
           id="name"
-          {...formik.getFieldProps('name')}
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          value={formik.values.name}
         />
         {formik.touched.name && formik.errors.name ? <div className="error">{formik.errors.name}</div>: null}
       </div>
@@ -51,7 +72,9 @@ function YoutubeForm() {
           type="email" 
           name="email" 
           id="email"
-          {...formik.getFieldProps('email')}
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          value={formik.values.email}
         />
         {formik.touched.email && formik.errors.email ? <div className="error">{formik.errors.email}</div>: null}
       </div>
@@ -62,7 +85,9 @@ function YoutubeForm() {
           type="text" 
           name="channel" 
           id="channel"
-          {...formik.getFieldProps('channel')}
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          value={formik.values.channel}
         />
         {formik.touched.channel && formik.errors.channel ? <div className="error">{formik.errors.channel}</div>: null}
       </div>
@@ -78,4 +103,4 @@ function YoutubeForm() {
   )
 }
 
-export default YoutubeForm;
+export default OldYoutubeForm;
