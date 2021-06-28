@@ -1,4 +1,6 @@
 import {useFormik} from 'formik';
+import * as Yup from 'yup';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons'
 
@@ -13,18 +15,22 @@ const onSubmit = (values) => {
   console.log("values :", values)
 }
 
+const validationSchema = Yup.object({
+  name: Yup.string().required('Name is required!'),
+  email: Yup.string().required('Email field is required!').matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, {message: 'Invalid email format!'}),
+  channel: Yup.string().required('Channel is required')
+}) 
+
 const validate = (values) => {
   let errors = {};
 
   if(!values.name) {
     errors.name = 'Name is required'
   }
-
   if(!values.email) {
     errors.email = 'Email is required'
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = 'Invalid email address'; 
-
   }
 
   if(!values.channel) {
@@ -42,7 +48,8 @@ function YoutubeForm() {
   const formik = useFormik({
     initialValues,
     onSubmit ,
-    validate,
+    // validate,
+    validationSchema
   })
 
   console.log('data :',formik, '\n','touched :', formik.touched)
