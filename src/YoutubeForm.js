@@ -93,7 +93,7 @@ function YoutubeForm() {
               console.log(props)
               return <div>
                 <input type='text' id="address" {...field}/>
-                {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+                {meta.touched && meta.error ? <TextError>{meta.error}</TextError> : null}
               </div>
             }}
           </Field>
@@ -105,7 +105,9 @@ function YoutubeForm() {
             id="facebook" 
             name="social.facebook"
           />
-          <ErrorMessage name="social.facebook" />
+          <ErrorMessage name="social.facebook"
+          component={TextError} 
+          />
         </div>
         <div className="form-control">
           <label htmlFor="twitter">Twitter</label>
@@ -114,7 +116,7 @@ function YoutubeForm() {
             id="twitter" 
             name="social.twitter"
           />
-          <ErrorMessage name="social.twitter" />
+          <ErrorMessage name="social.twitter" component={TextError}/>
         </div>
 
         <div>
