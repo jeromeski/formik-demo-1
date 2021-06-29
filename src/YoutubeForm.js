@@ -54,9 +54,10 @@ function YoutubeForm() {
       onSubmit={onSubmit}
       // validateOnChange={false}
       // validateOnBlur={false}
+      // validateOnMount
     >
       {({errors, touched, ...formik}) => { 
-        console.log(formik, "\n", "errors :",errors, "\n", "touched :", touched)
+        console.log(formik, '\n', "errors :",errors, '\n' , "touched :", touched)
         return <Form>
         <div className="form-control">
           <label htmlFor="name">Name:</label>
@@ -192,7 +193,7 @@ function YoutubeForm() {
           channel: true,
           comments: true
         })}>Visit Fields</button>
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={!formik.isValid}>Submit</button>
       </Form>}}
     </Formik>
   )
