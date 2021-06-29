@@ -52,8 +52,12 @@ function YoutubeForm() {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
+      // validateOnChange={false}
+      // validateOnBlur={false}
     >
-      {({errors, touched}) => (<Form>
+      {({errors, touched, ...formik}) => { 
+        console.log(formik, "\n", "errors :",errors, "\n", "touched :", touched)
+        return <Form>
         <div className="form-control">
           <label htmlFor="name">Name:</label>
           <Field 
@@ -84,7 +88,7 @@ function YoutubeForm() {
             id="channel"
             placeholder="Youtube Channel"
           />
-          <ErrorMessage name="channel"/>
+          <ErrorMessage name="channel" component={TextError}/>
         </div>
         <div className="form-control">
           <label htmlFor="comments">Comments:</label>
@@ -179,9 +183,17 @@ function YoutubeForm() {
           {!errors.email && touched.email ? <div><FontAwesomeIcon icon={faCheckCircle} size="xs" className="mr-2" /><small>Email is validated</small></div> : null}
           {!errors.channel && touched.channel ? <div><FontAwesomeIcon icon={faCheckCircle} size="xs" className="mr-2" /><small>Channel is validated</small></div> : null}
         </div>
-
+        <button type="button" onClick={() => formik.validateField('comments')}>Validate Field</button>
+        <button type="button" onClick={() => formik.validateForm()}>Validate Form</button>
+        <button type="button" onClick={() => formik.setFieldTouched('comments')}>Visit Comments</button>
+        <button type="button" onClick={() => formik.setTouched({
+          name: true,
+          email: true,
+          channel: true,
+          comments: true
+        })}>Visit Fields</button>
         <button type="submit">Submit</button>
-      </Form>)}
+      </Form>}}
     </Formik>
   )
 }
