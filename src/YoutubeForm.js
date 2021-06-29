@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons'
 import TextError from './TextError';
+import { useState } from 'react';
 
 
 const initialValues = {
@@ -17,6 +18,20 @@ const initialValues = {
     twitter: ""
   },
   phoneNumbers: ["",""],
+  phNumbers: [""]
+}
+
+const apiResValues = {
+  name: "Jerome Gee",
+  email: "jeromegee@gmail.com",
+  channel: "TheRealJeromeG",
+  comments: "Hello Foo, Hi Baz",
+  address: "B15 L9 Rome St Palmera 4",
+  social: {
+    facebook: "facebook.com",
+    twitter: "twitter.com"
+  },
+  phoneNumbers: ["123","456"],
   phNumbers: [""]
 }
 
@@ -62,15 +77,17 @@ const validateComments = value  => {
 
 
 function YoutubeForm() {
+  const [formValues, setFormValues] = useState(null)
 
   return (
     <Formik 
-      initialValues={initialValues}
+      initialValues={formValues || initialValues}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
       // validateOnChange={false}
       // validateOnBlur={false}
       // validateOnMount
+      enableReinitialize
     >
       {({errors, touched, ...formik}) => { 
         // console.log(formik, '\n', "errors :",errors, '\n' , "touched :", touched)
@@ -200,7 +217,7 @@ function YoutubeForm() {
           {!errors.email && touched.email ? <div><FontAwesomeIcon icon={faCheckCircle} size="xs" className="mr-2" /><small>Email is validated</small></div> : null}
           {!errors.channel && touched.channel ? <div><FontAwesomeIcon icon={faCheckCircle} size="xs" className="mr-2" /><small>Channel is validated</small></div> : null}
         </div>
-        <button type="button" onClick={() => formik.validateField('comments')}>Validate Field</button>
+        {/* <button type="button" onClick={() => formik.validateField('comments')}>Validate Field</button>
         <button type="button" onClick={() => formik.validateForm()}>Validate Form</button>
         <button type="button" onClick={() => formik.setFieldTouched('comments')}>Visit Comments</button>
         <button type="button" onClick={() => formik.setTouched({
@@ -208,13 +225,16 @@ function YoutubeForm() {
           email: true,
           channel: true,
           comments: true
-        })}>Visit Fields</button>
+        })}>Visit Fields</button> */}
+        <button type="button" onClick={() => setFormValues(apiResValues)}>
+          Load Data
+        </button>
         <button 
           type="submit" 
           disabled={!formik.isValid || formik.isSubmitting}
           >
             Submit
-          </button>
+        </button>
       </Form>}}
     </Formik>
   )
