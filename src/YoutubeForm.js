@@ -20,8 +20,24 @@ const initialValues = {
   phNumbers: [""]
 }
 
-const onSubmit = (values) => {
-  console.log("values :", values)
+const apiCall = (setSubmitting) => {
+  let counter = 3;
+  const timer = setInterval(() => {
+    counter--
+    console.log(counter)
+    if(counter === 0) {
+      setSubmitting(false)
+      clearInterval(timer)
+    }
+  },1000)
+  
+}
+
+const onSubmit = (values, onSubmitProps) => {
+  console.log("values :", values);
+  console.log("onSubmitProps:", onSubmitProps);
+  const {setSubmitting} = onSubmitProps;
+  apiCall(setSubmitting)
 }
 
 const validationSchema = Yup.object({
@@ -57,7 +73,7 @@ function YoutubeForm() {
       // validateOnMount
     >
       {({errors, touched, ...formik}) => { 
-        console.log(formik, '\n', "errors :",errors, '\n' , "touched :", touched)
+        // console.log(formik, '\n', "errors :",errors, '\n' , "touched :", touched)
         return <Form>
         <div className="form-control">
           <label htmlFor="name">Name:</label>
@@ -193,7 +209,12 @@ function YoutubeForm() {
           channel: true,
           comments: true
         })}>Visit Fields</button>
-        <button type="submit" disabled={!formik.isValid}>Submit</button>
+        <button 
+          type="submit" 
+          disabled={!formik.isValid || formik.isSubmitting}
+          >
+            Submit
+          </button>
       </Form>}}
     </Formik>
   )
