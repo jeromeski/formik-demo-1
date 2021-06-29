@@ -35,13 +35,14 @@ const apiResValues = {
   phNumbers: [""]
 }
 
-const apiCall = (setSubmitting) => {
+const apiCall = (setSubmitting, resetForm) => {
   let counter = 3;
   const timer = setInterval(() => {
     counter--
     console.log(counter)
     if(counter === 0) {
       setSubmitting(false)
+      resetForm()
       clearInterval(timer)
     }
   },1000)
@@ -51,8 +52,8 @@ const apiCall = (setSubmitting) => {
 const onSubmit = (values, onSubmitProps) => {
   console.log("values :", values);
   console.log("onSubmitProps:", onSubmitProps);
-  const {setSubmitting} = onSubmitProps;
-  apiCall(setSubmitting)
+  const {setSubmitting, resetForm} = onSubmitProps;
+  apiCall(setSubmitting, resetForm)
 }
 
 const validationSchema = Yup.object({
@@ -229,6 +230,7 @@ function YoutubeForm() {
         <button type="button" onClick={() => setFormValues(apiResValues)}>
           Load Data
         </button>
+        <button type="reset">Reset</button>
         <button 
           type="submit" 
           disabled={!formik.isValid || formik.isSubmitting}
